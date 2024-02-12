@@ -1,36 +1,50 @@
-fc1=input('Enter the freq of 1st Sine Wave carrier:');
-fc2=input('Enter the freq of 2nd Sine Wave carrier:');
-fp=input('Enter the freq of Periodic Binary pulse (Message):');
-amp=input('Enter the amplitude (For Both Carrier & Binary Pulse Message):');
-amp=amp/2;
-t=0:0.001:1; % For setting the sampling interval
-c1=amp.*sin(2*pi*fc1*t);% For Generating 1st Carrier Sine wave
-c2=amp.*sin(2*pi*fc2*t);% For Generating 2nd Carrier Sine wave
-subplot(4,1,1); %For Plotting The Carrier wave
-plot(t,c1)
-xlabel('Time')
-ylabel('Amplitude')
-title('Carrier 1 Wave')
-subplot(4,1,2) %For Plotting The Carrier wave
-plot(t,c2)
-xlabel('Time')
-ylabel('Amplitude')
-title('Carrier 2 Wave')
-m=amp.*square(2*pi*fp*t)+amp;%For Generating Square wave message
-subplot(4,1,3) %For Plotting The Square Binary Pulse (Message)
-plot(t,m)
-xlabel('Time')
-ylabel('Amplitude')
-title('Binary Message Pulses')
-for i=0:1000 %here we are generating the modulated wave
+%Frequency shift keying
+clc;
+close all;
+clear all;
+
+fc1 =10;% input(' freq of  1st sine wave carrier:');
+fc2 =30;% input(' freq of  2nd sine wave carrier:');
+fp = 5;%input('Enter the freq of periodic Binary pulse(MEssage):');
+amp =4;% input('Enter the amplitude (Carrier & binary pulse message both):');
+t = 0:0.001:1;
+
+%carrier generating
+c1 = amp.*sin(2*pi*fc1*t);
+c2 = amp.*sin(2*pi*fc2*t);
+
+subplot(4,1,1);
+plot(t,c1);
+xlabel('Time');
+ylabel('Amplitude');
+title('Carrier 1 wave');
+
+subplot(4,1,2);
+plot(t,c2);
+xlabel('Time');
+ylabel('Amplitude');
+title('Carrier 2 wave');
+
+%For Generating Square wave message
+m = amp/2.*square(2*pi*fp*t)+amp/2;
+subplot(4,1,3);
+plot(t,m);
+xlabel('Time');
+ylabel('Amplitude');
+title('Binary Message pulse');
+
+%modulated wave
+for i=0:1000;
     if m(i+1)==0
         mm(i+1)=c2(i+1);
-        else
+    else
         mm(i+1)=c1(i+1);
     end
 end
-subplot(4,1,4) %For Plotting The Modulated wave
-plot(t,mm)
-xlabel('Time')
-ylabel('Amplitude')
-title('Modulated Wave')
+
+subplot(4,1,4);
+plot(t,mm);
+xlabel('Time');
+ylabel('Amplitude');
+title('Modulated Wave');
+%10 30 5 4

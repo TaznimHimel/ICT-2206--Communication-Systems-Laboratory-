@@ -1,34 +1,25 @@
-%Code for AM 
-
-%===================================================
 %Taking Input
-Ac=input('Enter carrier signal amplitude: ');
-Am=input('Enter message signal amplitude: ');
-fc=input('Enter carrier signal frequency: ');
-fm=input('Enter message signal frequency: ');% fm<fc
-k=input('Enter modulation index: ');
-%===================================================
+Am = input('Enter message signal amplitude: ');
+Ac = input('Enter carrier signal amplitude: ');
+fm = input('message frequency: ');  %fm<fc
+fc = input('carrier frequency: ');
+ m =  Am/Ac; %Modulation Index  %m <= 1
 
-t = 0 : 0.001 : 1;
-m = Am * sin (2 * pi * fm * t); %message signal
-c = Ac * cos (2 * pi * fc * t); %carrier signal
-y = (1 + k * m).* c; %modulated signal
+t = 0:0.001:1;
 
+%Equation of the Message signal
+y1 = Am*sin(2*pi*fm*t);
+subplot(3,1,1);
+plot(t,y1,'blue','LineWidth',1);
 
-subplot(311);
-plot(t,m);
-xlabel('Time');
-ylabel('Amplitude');
-title('Message signal')
+%Equation of Carrier signal
+y2 = Ac*sin(2*pi*fc*t);
+subplot(3,1,2);
+plot(t,y2,'magenta','LineWidth',1);
 
-subplot(312)
-plot(t,c);
-xlabel('Time');
-ylabel('Amplitude');
-title('Carrier signal');
-
-subplot(313);
-plot(t,y);
-xlabel('Time');
-ylabel('Amplitude');
-title('Modulated signal');
+%Instantaneous voltage of resulting
+y = Ac*(1+m*sin(2*pi*fm*t)).*sin(2*pi*fc*t);
+subplot(3,1,3);
+plot(t,y,'red','LineWidth',1);
+fprintf('Mudulation index: %.2f\n',m);
+%input 2 4 5 100

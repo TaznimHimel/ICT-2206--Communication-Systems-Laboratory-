@@ -1,33 +1,25 @@
-%Code for FM 
-
-%===================================================
 %Taking Input
-Ac=input('Enter carrier signal amplitude: ');
-Am=input('Enter message signal amplitude: ');
-fc=input('Enter carrier signal frequency: ');
-fm=input('Enter message signal frequency: '); % fm<fc
-m=input('Enter modulation index: ');
-%===================================================
+vm = input('Enter Message signal Amplitude: ');
+vc = input('Enter Carrier signal Amplitude: ');
+fm = input('Message Signal Frequency: ');  %fm<fc
+fc = input('Carrier Signal Frequency: ');
+m = input('Enter Modulation index: ');  %m <= 1
+t = 0:0.001:1;
 
-t = 0:0.001:1; %upto 1000 samples
+%Equation of the Message signal
+y1 = vm*cos(2*pi*fm*t);
+subplot(3,1,1);
+plot(t,y1,'blue','LineWidth',1);
 
-msg = Am*sin(2*pi*fm*t);
-subplot(3,1,1); %plotting message signal
-plot(t,msg);
-xlabel('Time');
-ylabel('Amplitude');
-title('Message ');
+%Equation of Carrier Signal
+y2 = vc*cos(2*pi*fc*t);
+subplot(3,1,2);
+plot(t,y2,'magenta','LineWidth',1);
 
-carrier = Ac*sin(2*pi*fc*t);
-subplot(3,1,2); %plotting carrier signal
-plot(t,carrier);
-xlabel('Time');
-ylabel('Amplitude');
-title('Carrier Signal');
 
-y = Ac*sin(2*pi*fc*t+m.*cos(2*pi*fm*t));
-subplot(3,1,3);%plotting FM (Frequency Modulated) signal
-plot(t,y);
-xlabel('Time');
-ylabel('Amplitude');
-title('FM Signal');
+%instantaneous voltage of resulting
+y = vc*cos(2*pi*fc*t+m.*sin(2*pi*fm*t));
+subplot(3,1,3);
+plot(t,y,'red','LineWidth',1);
+
+%input 2 4 5 100 10

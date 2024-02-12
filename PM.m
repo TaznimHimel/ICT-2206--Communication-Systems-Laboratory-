@@ -1,35 +1,26 @@
+%Phase Modulation
 %Taking Input
-%======================================================
-vm = input('Enter the amplitude of message signal = ');
-vc = input('Enter the amplitude of carrier signal = ');
-fm = input('Enter the message frequency = ');
-fc = input('Enter the carrier frequency = ');
-m = input('Enter modulation index = ');
-%======================================================
-
-%Time Interval
+vm = input('Enter message signal Amplitude: ');
+vc = input('Enter carrier signal Amplitude: ');
+fm = input('Message Signal Frequency: ');  %fm<fc
+fc = input('Carrier Signal Frequency: ');
+m = input('Enter Modulation index: ');  %m <= 1
 t = 0:0.001:1;
 
-%Message Signal 
-sm = vm*sin(2*pi*fm*t);
+%Equation of the message signal
+phase_m = pi/3;
+y1 = vm*cos(2*pi*fm*t+phase_m);
 subplot(3,1,1);
-plot(t,sm);
-xlabel('Time ---->');
-ylabel('Amplitude ---->');
-title('Message Signal');
+plot(t,y1,'blue','LineWidth',1);
 
-%Carrier Signal
-sc = vc*sin(2*pi*fc*t);
+%cEquation of the Carrier signal
+phase_c = 2*pi/6;
+y2 = vc*cos(2*pi*fc*t+phase_c);
 subplot(3,1,2);
-plot(t,sc);
-xlabel('Time ---->');
-ylabel('Amplitude ---->');
-title('Carrier Signal');
+plot(t,y2,'magenta','LineWidth',1);
 
-%Phase Modulated Signal
-y = vc*sin(2*pi*fc*t+m.*sin(2*pi*fm*t));
+
+%instantaneous voltage of resulting
+y = vc*cos(2*pi*fc*t+m.*cos(2*pi*fm*t+phase_m));
 subplot(3,1,3);
-plot(t,y);
-xlabel('Time ---->');
-ylabel('Amplitude ---->');
-title('PM Wave');
+plot(t,y,'red','LineWidth',1);
